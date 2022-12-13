@@ -1,0 +1,51 @@
+services:
+  #####
+  server:
+    build: 
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: api-server
+    ports:
+      - 8000:8000
+    volumes:
+      - ./:/go/src/github.com/isksss/postit
+    depends_on:
+      - 'db'
+    environment:
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASS}
+      - MYSQL_ROOT_PASSWORD=${DB_ROOTPASS}
+    tty: true
+    working_dir: /go/src/github.com/isksss/postit/server
+  #####
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: client
+    ports:
+      - 8080:8080
+    volumes:
+      - ./:/usr/src/app/
+    tty: true
+    working_dir: /go/src/github.com/isksss/postit/client
+
+  #####
+  db:
+    build:
+      context: ./db
+      dockerfile: Dockerfile
+    container_name: db
+    ports:
+      - 33060:3306
+    environment:
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASS}
+      - MYSQL_ROOT_PASSWORD=${DB_ROOTPASS}
+      - TZ=${TZ}
+    volumes:
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./db/mysql-store:/var/lib/mysql
+      - ./db/mysql-logs:/var/log/mysql
