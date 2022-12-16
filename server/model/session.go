@@ -2,12 +2,13 @@ package model
 
 import "gorm.io/gorm"
 
-type Postit struct {
+type SessionKey struct {
 	gorm.Model
-	Id     int
-	UserId int
-	Text   string
-
+	// id         int
+	UserId     int
+	SessionKey string
+	// created_at time.Time
+	// deleted_at time.Time
 	// User    []Users `gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
 	// User []Users
 }

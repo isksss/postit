@@ -12,7 +12,9 @@ func main() {
 	log.Default().Print("Auto Migrate.")
 	db := database.Migrate()
 	log.Default().Print("End Migrate")
-	if database.HasTable(db, &model.Users{}) {
+	if database.HasTable(db, &model.User{}) {
 		log.Println("User Table is Exists.")
 	}
+
+	// gin
 }

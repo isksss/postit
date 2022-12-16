@@ -21,20 +21,20 @@ func Migrate() *gorm.DB {
 	//AutoMigrate
 	log.Print("start auto migrate")
 	log.Print("=== Users")
-	if err := db.AutoMigrate(&model.Users{}); err != nil {
+	if err := db.AutoMigrate(&model.User{}); err != nil {
 		panic(err)
 	}
 	log.Print("=== Users End ===")
-	// log.Print("=== Postit")
-	// if err := db.AutoMigrate(&model.Postit{}); err != nil {
-	// 	panic(err)
-	// }
-	// log.Print("=== Postit End ===")
-	// log.Print("=== Key")
-	// if err := db.AutoMigrate(&model.Key{}); err != nil {
-	// 	panic(err)
-	// }
-	// log.Print("=== Key End ===")
+	log.Print("=== Postit")
+	if err := db.AutoMigrate(&model.Postit{}); err != nil {
+		panic(err)
+	}
+	log.Print("=== Postit End ===")
+	log.Print("=== Key")
+	if err := db.AutoMigrate(&model.SessionKey{}); err != nil {
+		panic(err)
+	}
+	log.Print("=== Key End ===")
 
 	return db
 }
