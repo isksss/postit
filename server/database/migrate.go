@@ -11,8 +11,8 @@ import (
 // データベースMigration
 func Migrate() *gorm.DB {
 	//todo: DB情報などを環境変数から持ってくる
-	dsn := "user:mysql@tcp(db:3306)/postit"
-	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	// dsn := "user:mysql@tcp(db:3306)/postit"
+	db, err := GetGormDb()
 	if err != nil {
 		log.Println("")
 		panic(err)
@@ -37,4 +37,11 @@ func Migrate() *gorm.DB {
 	log.Print("=== Key End ===")
 
 	return db
+}
+
+// db connection
+func GetGormDb() (*gorm.DB, error) {
+	dsn := "user:mysql@tcp(db:3306)/postit?parseTime=true"
+	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	return db, err
 }
