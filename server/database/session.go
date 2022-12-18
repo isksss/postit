@@ -1,17 +1,24 @@
 package database
 
-import "github.com/isksss/postit/server/model"
+import (
+	"log"
+
+	"github.com/isksss/postit/server/model"
+)
 
 func IsExistsSession(userid uint) bool {
+	log.Print("is exists session...")
 	db, _ := GetGormDb()
 
 	var SessionKey model.SessionKey
 	db.Where(model.SessionKey{UserId: userid}).Find(&SessionKey)
-
-	if SessionKey.ID == userid {
-		return true
+	log.Print("userid:", userid)
+	log.Print("sessionkey.ID:", SessionKey.UserId)
+	if SessionKey.UserId == userid {
+		log.Print("あったよー！")
+		return false
 	}
-
-	return false
+	log.Print("なかったよー！")
+	return true
 
 }
